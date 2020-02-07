@@ -1,6 +1,7 @@
 # My Stuff
 .DS_Store
 Resources/
+Instructions.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
