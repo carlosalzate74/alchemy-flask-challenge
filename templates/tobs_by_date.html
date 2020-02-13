@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Climate App</title>
+    <link rel="stylesheet" href="/static/app01.css" />
+</head>
+<body>
+	<h2 align="center">Welcome to the Climate App!</h2>
+	
+	<table border=1  align="center">
+		<tr>
+			<td><h3 align="center">Available Routes</h3></td>
+			<td><h3 align="center">{{ title }}</h3><br/>
+				<p align="center">{{ start_date }} -
+				{% if end_date: %}
+					{{ end_date }}
+				{% else %}
+				 Today
+				{% endif %}</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td>{% include 'menu.html' %}</td>
+			<td>
+				<ul>
+				{% for element in target.keys() %}
+					<li>{{ element }} {{ target[element] }}</li>
+   				{% endfor %}
+   				</ul>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

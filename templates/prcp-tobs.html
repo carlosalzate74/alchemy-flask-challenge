@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Climate App</title>
+    <link rel="stylesheet" href="/static/app01.css" />
+</head>
+<body>
+	<h2 align="center">Welcome to the Climate App!</h2>
+	
+	<table border=1  align="center">
+		<tr>
+			<td><h3 align="center">Available Routes</h3></td>
+			<td><h3 align="center">{{ title }}</h3></td>
+		</tr>
+
+		<tr>
+			<td>{% include 'menu.html' %}</td>
+			<td>
+				<ul>
+					<li class="small">{{ target }}</li>
+   				</ul>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

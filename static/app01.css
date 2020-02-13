@@ -1,0 +1,21 @@
+body {
+	font-family: Verdana;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	border: 1px solid orange;
+	padding: 10px;
+	text-align: left;
+}
+
+td p{
+	font-size:15px;
+}
+
+ul li.small {
+	font-size: 12px !important;
+}
