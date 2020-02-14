@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import datetime as dt
 from sqlalchemy import func
-import pandas as pd
 
 # Setting up environment
 app = Flask(__name__)
@@ -66,15 +65,15 @@ def precipitation():
         .all()
     )
 
-    # return jsonify(prcp_stats)
-    # return render_template("main.html", target=jsonify(prcp_stats))
-    return render_template("prcp-tobs.html", target=prcp_stats, title="Last 12 Months Precipitation")
+    return render_template(
+        "prcp-tobs.html", target=prcp_stats, title="Last 12 Months Precipitation"
+    )
 
 
 @app.route("/api/v1.0/stations")
 def get_stations():
     stations = Station.query.all()
-    target_ =  [station.to_dict() for station in stations]
+    target_ = [station.to_dict() for station in stations]
 
     return render_template("stations.html", target=target_, title="Stations")
 
@@ -107,21 +106,20 @@ def tobs():
         .filter(Measurement.station == most_active_station[0])
         .all()
     )
-    
-    return render_template("prcp-tobs.html", target=tobs_stats, title="Last 12 Months Tobs")
+
+    return render_template(
+        "prcp-tobs.html", target=tobs_stats, title="Last 12 Months Tobs"
+    )
 
 
 @app.route("/api/v1.0/<start_date>")
 @app.route("/api/v1.0/<start_date>/<end_date>")
 def calc_temps(start_date, end_date=None):
-    calc_temps = (
-        db.session.query(
-            func.min(Measurement.tobs).label("Min Temp"),
-            func.avg(Measurement.tobs).label("Avg Temp"),
-            func.max(Measurement.tobs).label("Max Temp"),
-        )
-        .filter(Measurement.date >= start_date)
-    )
+    calc_temps = db.session.query(
+        func.min(Measurement.tobs).label("Min Temp"),
+        func.avg(Measurement.tobs).label("Avg Temp"),
+        func.max(Measurement.tobs).label("Max Temp"),
+    ).filter(Measurement.date >= start_date)
 
     if end_date:
         calc_temps = calc_temps.filter(Measurement.date <= end_date)
@@ -133,7 +131,13 @@ def calc_temps(start_date, end_date=None):
     for row in temps:
         target_.update(row._asdict())
 
-    return render_template("tobs_by_date.html", target=target_, title="Tobs by Date", start_date=start_date, end_date=end_date)
+    return render_template(
+        "tobs_by_date.html",
+        target=target_,
+        title="Tobs by Date",
+        start_date=start_date,
+        end_date=end_date,
+    )
 
 
 if __name__ == "__main__":
